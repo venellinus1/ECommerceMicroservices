@@ -1,42 +1,40 @@
 ﻿
-
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Ordering.Infrastructure.Data.Interceptors;
-
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
-    public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
+    public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
         UpdateEntities(eventData.Context);
-        return base.SavedChanges(eventData, result);
+        return base.SavingChanges(eventData, result);
     }
 
-    public override ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken cancellationToken = default)
+    public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
-        return base.SavedChangesAsync(eventData, result, cancellationToken);
+        UpdateEntities(eventData.Context);
+        return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
 
-    public void UpdateEntities(DbContext context)
+    public void UpdateEntities(DbContext? context)
     {
         if (context == null) return;
-        foreach(var entry in context.ChangeTracker.Entries<IEntity>())
+
+        foreach (var entry in context.ChangeTracker.Entries<IEntity>())
         {
             if (entry.State == EntityState.Added)
             {
                 entry.Entity.CreatedBy = "venelin";
-                entry.Entity.CreatedAt = DateTime.Now;
+                entry.Entity.CreatedAt = DateTime.UtcNow;
             }
 
             if (entry.State == EntityState.Added || entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
                 entry.Entity.LastModifiedBy = "venelin";
-                entry.Entity.LastModified = DateTime.Now;  
+                entry.Entity.LastModified = DateTime.UtcNow;
             }
         }
-
-
     }
 }
 
