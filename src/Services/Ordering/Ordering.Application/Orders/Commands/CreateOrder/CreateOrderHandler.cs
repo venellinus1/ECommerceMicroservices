@@ -1,8 +1,4 @@
 ﻿
-using BuildingBlocks.CQRS;
-using Ordering.Application.Data;
-using Ordering.Application.DTOs;
-
 
 namespace Ordering.Application.Orders.Commands.CreateOrder;
 
