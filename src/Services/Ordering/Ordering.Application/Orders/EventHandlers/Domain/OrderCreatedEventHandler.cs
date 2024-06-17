@@ -1,7 +1,9 @@
-﻿
-namespace Ordering.Application.Orders.EventHandlers;
+﻿using MassTransit;
 
-public class OrderCreatedEventHandler(ILogger<OrderCreatedEventHandler> logger)
+namespace Ordering.Application.Orders.EventHandlers.Domain;
+
+public class OrderCreatedEventHandler
+    (ILogger<OrderCreatedEventHandler> logger, IPublishEndpoint publishEndpoint)
     : INotificationHandler<OrderCreatedEvent>
 {
     public Task Handle(OrderCreatedEvent notification, CancellationToken cancellationToken)
