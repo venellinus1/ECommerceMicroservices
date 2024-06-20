@@ -8,6 +8,8 @@ builder.Services.AddRefitClient<ICatalogService>()
     {
         config.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]!);
     });
+// Add services to the container.
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 var app = builder.Build();
 
