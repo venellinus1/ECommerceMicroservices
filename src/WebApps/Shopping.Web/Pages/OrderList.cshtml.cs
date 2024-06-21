@@ -9,7 +9,7 @@ public class OrderListModel(IOrderingService orderingService, ILogger<OrderListM
     {
         //assuming customerId is passed from the UI authenticated user, hardcoded as "swm" atm
         var customerId = new Guid("58c49479-ec65-4de2-86e7-033c546291aa");
-
+        //
         var response = await orderingService.GetOrdersByCustomer(customerId);
         Orders = response.Orders;
 
