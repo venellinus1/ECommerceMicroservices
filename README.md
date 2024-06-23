@@ -49,7 +49,7 @@
 - Apply **SOLID Principles**, **Dependency Injection**
 - Raise and handle **Domain Events** & **Integration Events**
 - **Entity Framework Core Code-First Approach, Migrations, DDD Entity Configurations**
-- **Clean Architecture** implementation on **Entity Framework** and **SQL Server**
+- **Clean Architecture** implementation (Domain, Application, Infrastructure, API layers) on **Entity Framework** and **SQL Server**
 - Consuming **RabbitMQ** BasketCheckout event queue with using **MassTransit-RabbitMQ** Configuration
 - Containerize Ordering Microservices with SQL Server database
 
